@@ -77,6 +77,11 @@ class AktaKelahiranController extends Controller
                 'fm6' => $request->fm6, // nama ibu
                 'fm7' => $request->fm7, // no kk
                 'fm8' => $request->fm8,
+                'fm9' => $request->fm9,
+                'fm10' => $request->fm10,
+                'fm11' => $request->fm11,
+                'fm12' => $request->fm12,
+                'fm13' => $request->fm13,
                 'img1' => $this->uploadImage2($request->file('img1'), $this->path), // kk
                 'img2' => $this->uploadImage2($request->file('img2'), $this->path), // ktp ibu
                 'img3' => $this->uploadImage2($request->file('img3'), $this->path), // ktp bapak

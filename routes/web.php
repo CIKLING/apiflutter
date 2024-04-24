@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\MasterController;
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
@@ -17,11 +18,18 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// Login Auth
+$router->group(['prefix' => 'autentikasi'], function () use ($router) {
+    $router->post('/login', ['uses' => 'LoginController@sign_in']);
+    $router->post('/register', ['uses' => 'LoginController@signUp']);
+});
+
 // MASTER
 $router->group(['prefix' => 'master'], function () use ($router) {
     $router->get('/', ['uses' => 'MasterController@index']);
     $router->get('kecamatan', ['uses' => 'MasterController@kecamatan']);
     $router->post('kelurahan', ['uses' => 'MasterController@kelurahan']);
+    // $router->get('/users', ['uses' => 'MasterController@getUsers']);
 });
 
 // PERMOHONAN
@@ -33,6 +41,7 @@ $router->group(['prefix' => 'permohonan'], function () use ($router) {
 // AKUN
 $router->group(['prefix' => 'akun'], function () use ($router) {
     $router->get('/', ['uses' => 'AkunController@index']);
+    $router->get('getUser', ['uses' => 'AkunController@getUser']);
     $router->post('sync', ['uses' => 'AkunController@sync']);
     $router->post('verifikasi', ['uses' => 'AkunController@verifikasi']);
 });

@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -14,7 +13,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'api'),
+        'guard' => 'web', // Set default guard to 'web'
+        'passwords' => 'users',
     ],
 
     /*
@@ -30,12 +30,15 @@ return [
     | users are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your user's data.
     |
-    | Supported: "token"
+    | Supported: "session", "token"
     |
     */
 
     'guards' => [
-        'api' => ['driver' => 'api'],
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -56,7 +59,10 @@ return [
     */
 
     'providers' => [
-        //
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class, // Adjust the User model namespace as needed
+        ],
     ],
 
     /*
@@ -79,7 +85,11 @@ return [
     */
 
     'passwords' => [
-        //
+        'users' => [
+            'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
     ],
 
 ];

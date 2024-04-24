@@ -2,20 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Traits\HasScope;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Authenticatable;
+// use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasScope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Notifications\ResetPasswordNotification;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasScope;
+    use Authenticatable, HasFactory, HasRoles, HasScope;
 
     /**
      * The attributes that are mass assignable.
@@ -32,8 +31,6 @@ class User extends Authenticatable
         'photo',
         'kec',
         'kel',
-        'tugas',
-        'hit',
         'status',
         'token_user'
     ];
@@ -61,9 +58,9 @@ class User extends Authenticatable
 
     protected function avatar(): Attribute
     {
-        return Attribute::make(
-            get: fn ($value) => $value != '' ? asset('/storage/donaturs/' . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100',
-        );
+        return Attribute::make(function ($value) {
+            return $value != '' ? asset('/storage/donaturs/' . $value) : 'https://ui-avatars.com/api/?name=' . str_replace(' ', '+', $this->name) . '&background=4e73df&color=ffffff&size=100';
+        });
     }
 
     public function orders()
@@ -80,5 +77,4 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
-
 }

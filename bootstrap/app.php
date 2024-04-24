@@ -120,11 +120,6 @@ $app->router->group([
     require __DIR__ . '/../routes/web.php';
 });
 
-$app->router->group([
-    'namespace' => 'App\Http\Controllers\Api', // Adjust the namespace as needed
-], function ($router) {
-    require __DIR__ . '/../routes/api.php'; // Load the API routes file
-});
 
 
 return $app;

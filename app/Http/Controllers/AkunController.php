@@ -28,6 +28,12 @@ class AkunController extends Controller
         return response()->json(['success' => true, 'message' => 'Ok !']);
     }
 
+    public function getUser()
+    {
+
+        \App\Models\Admin::all();
+    }
+
     public function sync(Request $request)
     {
 
@@ -106,8 +112,6 @@ class AkunController extends Controller
                     ]
                 ], 500);
             }
-
-
         }
 
     }
